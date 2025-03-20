@@ -372,7 +372,7 @@ def ui_core():
     )
 
     try:
-        import WeTextProcessing  # noqa: F401
+        from tn.chinese.normalizer import Normalizer
 
     except ImportError:
         gr.Markdown(
