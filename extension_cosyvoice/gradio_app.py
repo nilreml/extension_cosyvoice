@@ -194,9 +194,28 @@ def ui_app_chunk():
             outputs=audio_output,
         )
 
+def download_models(selected_models):
+    from modelscope import snapshot_download
+    import os
+    model_mapping = {
+        "CosyVoice2-0.5B": ('iic/CosyVoice2-0.5B', os.path.join("data", "models", "cosyvoice", "CosyVoice2-0.5B")),
+        "CosyVoice-300M": ('iic/CosyVoice-300M', os.path.join("data", "models", "cosyvoice", "CosyVoice-300M")),
+        "CosyVoice-300M-25Hz": ('iic/CosyVoice-300M-25Hz', os.path.join("data", "models", "cosyvoice", "CosyVoice-300M-25Hz")),
+        "CosyVoice-300M-SFT": ('iic/CosyVoice-300M-SFT', os.path.join("data", "models", "cosyvoice", "CosyVoice-300M-SFT")),
+        "CosyVoice-300M-Instruct": ('iic/CosyVoice-300M-Instruct', os.path.join("data", "models", "cosyvoice", "CosyVoice-300M-Instruct")),
+        "CosyVoice-ttsfrd": ('iic/CosyVoice-ttsfrd', os.path.join("data", "models", "cosyvoice", "CosyVoice-ttsfrd"))
+    }
+    downloaded = []
+    for model in selected_models:
+        id, local_dir = model_mapping.get(model, (None, None))
+        if id:
+            snapshot_download(id, local_dir=local_dir)
+            downloaded.append(model)
+    return "Downloaded: " + ", ".join(downloaded)
+
 def ui_core():
     gr.Markdown(
-            """
+        """
     # CosyVoice2 TTS
 
     REQUIRES pynini or and WeTextProcessing!
@@ -216,7 +235,6 @@ def ui_core():
     - Chunked text processing for long inputs
 
     The model supports English and Chinese.
-
     """
     )
     with gr.Tabs():
@@ -228,9 +246,24 @@ def ui_core():
             ui_app_cross_lingual()
         with gr.Tab("Chunked Text"):
             ui_app_chunk()
+        with gr.Tab("Download Models"):
+            gr.Markdown("## Download Pretrained Models")
+            models_checkbox = gr.CheckboxGroup(
+                choices=[
+                    "CosyVoice2-0.5B", 
+                    "CosyVoice-300M", 
+                    "CosyVoice-300M-25Hz",
+                    "CosyVoice-300M-SFT", 
+                    "CosyVoice-300M-Instruct", 
+                    "CosyVoice-ttsfrd"
+                ],
+                label="Select Models to Download"
+            )
+            download_btn = gr.Button("Download Selected Models", variant="primary")
+            download_output = gr.Textbox(label="Download Status", interactive=False)
+            download_btn.click(fn=download_models, inputs=models_checkbox, outputs=download_output)
 
 def ui_app():
     with gr.Blocks() as app:
         ui_core()
     return app
-
