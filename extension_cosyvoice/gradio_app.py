@@ -422,7 +422,7 @@ def ui_core():
             gr.Markdown("## Install Dependencies")
             with gr.Row():
                 conda_cmd_input = gr.Textbox(
-                    value="conda install -c conda-forge modelscope",
+                    value="conda install -c conda-forge pynini==2.1.6",
                     label="Conda Install Command",
                     lines=1,
                 )
@@ -433,7 +433,7 @@ def ui_core():
                 )
             with gr.Row():
                 pip_cmd_input = gr.Textbox(
-                    value="pip install modelscope", label="Pip Install Command", lines=1
+                    value="pip install WeTextProcessing", label="Pip Install Command", lines=1
                 )
                 run_pip_btn = gr.Button("Run Pip Install", variant="primary")
                 pip_output = gr.Textbox(label="Pip Output", interactive=False)
