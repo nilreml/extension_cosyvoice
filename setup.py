@@ -11,7 +11,7 @@ setuptools.setup(
     scripts=[],
     install_requires=[
         "gradio",
-        "cosyvoice @ git+https://github.com/rsxdalv/CosyVoice@main",
+        "cosyvoice @ git+https://github.com/nilreml/CosyVoice@main",
         "modelscope>=1.25.0",
     ],
     classifiers=[
