@@ -7,7 +7,7 @@ def extension__tts_generation_webui():
         "package_name": "extension_cosyvoice",
         "name": "CosyVoice",
         "version": "0.1.6",
-        "requirements": "git+https://github.com/rsxdalv/extension_cosyvoice@main",
+        "requirements": "git+https://github.com/nilreml/extension_cosyvoice@main",
         "description": "CosyVoice: A TTS solution for fluent and natural speech synthesis.",
         "extension_type": "interface",
         "extension_class": "text-to-speech",
