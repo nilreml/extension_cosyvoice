@@ -372,7 +372,7 @@ def ui_core():
     )
 
     try:
-        from tn.chinese.normalizer import Normalizer
+        from tn.english.normalizer import Normalizer
 
     except ImportError:
         gr.Markdown(
